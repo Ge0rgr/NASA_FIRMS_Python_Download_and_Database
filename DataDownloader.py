@@ -100,6 +100,9 @@ print("\n")
 #time.sleep(2)
 '''
 
+########## TODO MAKE A METHOD TO GET CLEAN LINKS
+
+
 ####     Choose the Data-Collection that you want to get the Data from
 
 go("https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS")
@@ -140,6 +143,7 @@ for i,val in enumerate(data):
 
 folder = int(input("\n Please enter the number on the left of the desired folder: "))
 
+#only continue when a valid number is entered
 while True:
     if folder not in range(0,len(data_links)):
         print("\n Please enter a valid number (0 -",len(data_links)-1,") : ")
@@ -150,7 +154,7 @@ while True:
 
 
 ###   Enter the folder that has been chosen
-print("Entering folder: ", data[folder], "\n")
+print("\nEntering folder: ", data[folder], "\n")
 
 three_dots = "..."
 for char in three_dots:
@@ -165,6 +169,69 @@ follow(data_links[folder])
 
 
 ###   Choose the Region you want the Data for
+
+region_content = browser.html  # Capture raw HTML
+
+soup = BeautifulSoup(region_content,"html.parser")
+region_links = []
+
+#Retrieve specific links that are saved in html and add them to a list
+for link in soup.find_all("tr"):
+    if link.has_attr("data-href"):
+        region_links.append(link["data-href"])
+
+
+
+# remove unwanted links from the list
+substring = "https" 
+
+for link in region_links:
+    if not substring in link:
+        region_links.remove(link)
+
+
+#Save just the Folder names for visual presentation (and to get used to regex)
+region = []
+
+for foldername in region_links:
+    x = re.findall(r"/([^/]+)/$",foldername) #has a slash, then extract that (what has one or more non slash characters); and has a Slash at the end, where after that, nothing follows
+    region.append(x)
+
+print("\n\n From which Region do you want to download the Data?\n")
+
+for i,val in enumerate(region):
+    print(i,val)
+
+
+folder = int(input("\n Please enter the number on the left of the desired folder: "))
+
+#only continue when a valid number is entered
+while True:
+    if folder not in range(0,len(region_links)):
+        print("\n Please enter a valid number (0 -",len(region_links)-1,") : ")
+        folder = int(input())
+    elif folder in range(0,len(region_links)):
+        break
+
+
+
+###   Enter the folder that has been chosen
+print("\nEntering folder: ", region[folder], "\n")
+
+three_dots = "..."
+for char in three_dots:
+    print(char,end="",flush=True)
+    time.sleep(0.3)
+
+print("\n")
+
+follow(region_links[folder])
+
+
+
+
+
+###  Download the Data
 
 
 '''
