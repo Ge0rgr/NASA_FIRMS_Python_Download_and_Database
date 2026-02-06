@@ -6,6 +6,9 @@ import time
 from bs4 import BeautifulSoup
 from DD_methods import *
 
+#### if by any chance loggged in, then logout first
+go("https://urs.earthdata.nasa.gov/logout")
+
 
 ######    Go to nasa login site and log in
 
@@ -152,7 +155,7 @@ follow(region_links[region_foldernumber])
 
 
 
-'''
+
 ###  Download the Data
 
 
@@ -164,7 +167,7 @@ print("\n Successfully logged out from the Website\n")
 
 
 
-
+'''
 
 
 #####    for download token
