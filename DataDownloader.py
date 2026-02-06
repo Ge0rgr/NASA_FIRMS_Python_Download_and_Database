@@ -4,6 +4,7 @@ import re
 import sys
 import time
 from bs4 import BeautifulSoup
+from DD_methods import *
 
 '''
 ######    Go to nasa login site and log in
@@ -100,141 +101,58 @@ print("\n")
 #time.sleep(2)
 '''
 
-########## TODO MAKE A METHOD TO GET CLEAN LINKS
 
 
 ####     Choose the Data-Collection that you want to get the Data from
 
 go("https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS")
 
-data_content = browser.html  # Capture raw HTML
 
-soup = BeautifulSoup(data_content,"html.parser")
-data_links = []
-
-#Retrieve specific links that are saved in html and add them to a list
-for link in soup.find_all("tr"):
-    if link.has_attr("data-href"):
-        data_links.append(link["data-href"])
+data_links = LinkCleaner() #Method to retrieve only desirable links in a list
 
 
-# remove unwanted links from the list
-substring = "https" 
-
-for link in data_links:
-    if not substring in link:
-        data_links.remove(link)
+data_foldernames = LinkShort(data_links) #Last slash of a link, so you can see what folder you will follow
 
 
-print(data_links)
+data_foldernumber = FolderChooser(data_foldernames) # get the one number of the enumerated links to follow; chosen by the user
 
-#Save just the Folder names for visual presentation (and to get used to regex)
-data = []
-
-for foldername in data_links:
-    x = re.findall(r"/([^/]+)/$",foldername) #has a slash, then extract that (what has one or more non slash characters); and has a Slash at the end, where after that, nothing follows
-    data.append(x)
-
-print("\n\n From which Data-Collection do you want to download the Data?\n")
-
-for i,val in enumerate(data):
-    print(i,val)
+print("\nEntering folder: ", data_foldernames[data_foldernumber],"\n" )
 
 
-folder = int(input("\n Please enter the number on the left of the desired folder: "))
-
-#only continue when a valid number is entered
-while True:
-    if folder not in range(0,len(data_links)):
-        print("\n Please enter a valid number (0 -",len(data_links)-1,") : ")
-        folder = int(input())
-    elif folder in range(0,len(data_links)):
-        break
+ThreeDots() #print three Dots with a delay
 
 
-
-###   Enter the folder that has been chosen
-print("\nEntering folder: ", data[folder], "\n")
-
-three_dots = "..."
-for char in three_dots:
-    print(char,end="",flush=True)
-    time.sleep(0.3)
-
-print("\n")
-
-follow(data_links[folder])
+###   Follow the Link that has been chosen with the number from FolderChooser
+follow(data_links[data_foldernumber])
  
 
 
 
 ###   Choose the Region you want the Data for
 
-region_content = browser.html  # Capture raw HTML
 
-soup = BeautifulSoup(region_content,"html.parser")
-region_links = []
+region_links = LinkCleaner()
 
-#Retrieve specific links that are saved in html and add them to a list
-for link in soup.find_all("tr"):
-    if link.has_attr("data-href"):
-        region_links.append(link["data-href"])
+region_foldernames = LinkShort(region_links)
+
+region_foldernumber = FolderChooser(region_foldernames) 
 
 
+print("\nEntering folder: ", region_foldernames[region_foldernumber], "\n")
 
-# remove unwanted links from the list
-substring = "https" 
-
-for link in region_links:
-    if not substring in link:
-        region_links.remove(link)
-
-
-#Save just the Folder names for visual presentation (and to get used to regex)
-region = []
-
-for foldername in region_links:
-    x = re.findall(r"/([^/]+)/$",foldername) #has a slash, then extract that (what has one or more non slash characters); and has a Slash at the end, where after that, nothing follows
-    region.append(x)
-
-print("\n\n From which Region do you want to download the Data?\n")
-
-for i,val in enumerate(region):
-    print(i,val)
-
-
-folder = int(input("\n Please enter the number on the left of the desired folder: "))
-
-#only continue when a valid number is entered
-while True:
-    if folder not in range(0,len(region_links)):
-        print("\n Please enter a valid number (0 -",len(region_links)-1,") : ")
-        folder = int(input())
-    elif folder in range(0,len(region_links)):
-        break
-
-
+ThreeDots()
 
 ###   Enter the folder that has been chosen
-print("\nEntering folder: ", region[folder], "\n")
 
-three_dots = "..."
-for char in three_dots:
-    print(char,end="",flush=True)
-    time.sleep(0.3)
+follow(region_links[region_foldernumber])
 
-print("\n")
-
-follow(region_links[folder])
-
-
-
-
-
-###  Download the Data
 
 
 '''
+###  Download the Data
+
+
+
 #Logout from Website
 
 go("https://urs.earthdata.nasa.gov/logout")
