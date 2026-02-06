@@ -126,17 +126,15 @@ data_foldernumber = FolderChooser(data_foldernames) # get the one number of the 
 print("\nEntering folder: ", data_foldernames[data_foldernumber],"\n" )
 
 
-ThreeDots() #print three Dots with a delay
+ThreeDots() #print three Dots with a short delay
 
 
-###   Follow the Link that has been chosen with the number from FolderChooser
+###   Follow the Link that has been chosen with the number with FolderChooser
 follow(data_links[data_foldernumber])
  
 
 
-
 ###   Choose the Region you want the Data for
-
 
 region_links = LinkCleaner()
 
@@ -149,11 +147,10 @@ print("\nEntering folder: ", region_foldernames[region_foldernumber], "\n")
 
 ThreeDots()
 
-###   Enter the folder that has been chosen
+
+###   Follow the Link that has been chosen with the number with FolderChooser
 
 follow(region_links[region_foldernumber])
-
-
 
 
 ###  Download the Data
