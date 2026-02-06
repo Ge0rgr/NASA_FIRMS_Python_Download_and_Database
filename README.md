@@ -1,2 +1,2 @@
-Ein Python Skript, um die monatlichen NASA FIRMS Branddaten, die als .txt abgelegt sind, herunterzuladen. Dabei wird eine zusätzlich eine Datenbank erstellt, mittels welcher doppeltes Herunterladen vermieden wird. 
+Ein Python Skript, um die täglichen NASA FIRMS Branddaten in Europa, aufgezeichnet von Noaa 20 VIIRS C2, die als .txt abgelegt sind, herunterzuladen. Dabei wird eine zusätzlich eine Datenbank erstellt, mittels welcher doppeltes Herunterladen vermieden wird. Jeden Tag wrid von NASA ein neuer Datensatz erstellt. Nur die Daten der letzten 2 Monate stehen zur Verfügung. Durch das durchführen des Skripts soll man auf einfachem Weg die aktuellsten (neuen) Daten abspeichern können.
 
