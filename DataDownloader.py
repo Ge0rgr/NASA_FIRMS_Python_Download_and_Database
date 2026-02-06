@@ -6,7 +6,7 @@ import time
 from bs4 import BeautifulSoup
 from DD_methods import *
 
-'''
+
 ######    Go to nasa login site and log in
 
 go('https://urs.earthdata.nasa.gov/')
@@ -69,6 +69,8 @@ while True:
 #Delay for visual purposes
 #time.sleep(2)
 
+
+
 ####          Go to nasa user-profile to retrieve the username
 
 go('https://urs.earthdata.nasa.gov/profile')
@@ -78,8 +80,10 @@ html_words = html_content.split() #Split words of html into a list
 
 substring = "Username:" #Will be searched for in the html document in order to retrieve the Username
 
-#go through enumerated list and find the index of the word, which contains the Substring Username. If not found: enter -1
-tmp = next((i for i, word in enumerate(html_words) if substring in word),-1)
+#go through enumerated list and find the first(because of next) index of the word, which contains the Substring Username. If not found: enter -1
+# word_index for word_index: Both have to have the same name. Right word_index represents the enumeratin value and the left one will be returned 
+#(if left has differend name, then the programm doesn't know what to return (like in word_index, word = (3, "Username:"), then return the number 3))
+tmp = next((word_index for word_index, word in enumerate(html_words) if substring in word),-1)
 
 #If no Username detected, close the script;  
 if tmp == -1:
@@ -99,7 +103,7 @@ for char in username:
 print("\n")
 
 #time.sleep(2)
-'''
+
 
 
 
