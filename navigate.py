@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 from twill.commands import *
 import re
-import time
 
 # link_cleaner requires that you entered a link with go([Link]) or follow([Link] with twill in the main file)
 # returns a list of links of the html site (with undesirable Links removed (for my personal purpose))
@@ -79,13 +78,3 @@ def FolderChooser(FoldersToChoose):
     return folder
 
 ################################################################################################################################
-
-#Just print out thre dots with a delay for a cool show
-def ThreeDots():
-    three_dots = "..."
-    for char in three_dots:
-        print(char,end="",flush=True)
-        time.sleep(0.3)
-    print("\n")
-
-##################################################################################################################################
