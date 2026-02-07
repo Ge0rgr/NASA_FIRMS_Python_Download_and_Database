@@ -22,9 +22,13 @@ def LinkCleaner():
     # remove unwanted links from the list
     substring = "https" 
 
+    tmp_data_links = []
+
     for link in data_links:
-        if not substring in link:
-            data_links.remove(link)
+        if substring in link:
+            tmp_data_links.append(link)
+
+    data_links = tmp_data_links
 
     return data_links
 
@@ -42,7 +46,8 @@ def LinkShort(list_links):
 
     for foldername in list_links:
         x = re.findall(r"/([^/]+)/$",foldername) #has a slash, then extract that (what has one or more non slash characters); and has a Slash at the end, where after that, nothing follows
-        data.append(x)
+        if x:
+            data.append(x[0])
     
     return data
 

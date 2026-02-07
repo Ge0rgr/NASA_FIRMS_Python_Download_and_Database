@@ -4,7 +4,8 @@ import re
 import sys
 import time
 from bs4 import BeautifulSoup
-from DD_methods import *
+import DD_methods as dd
+import getpass
 
 #### if by any chance loggged in, then logout first
 go("https://urs.earthdata.nasa.gov/logout")
@@ -33,7 +34,7 @@ while True:
             mail =""
             continue
     if passw =="":
-        passw = input("Please enter your password: ")
+        passw = getpass.getpass("Please enter your password: ")
         continue
 
     #Enters the username and password in the form
@@ -115,18 +116,18 @@ print("\n")
 go("https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS")
 
 
-data_links = LinkCleaner() #Method to retrieve only desirable links in a list
+data_links = dd.LinkCleaner() #Method to retrieve only desirable links in a list
 
 
-data_foldernames = LinkShort(data_links) #Last slash of a link, so you can see what folder you will follow
+data_foldernames = dd.LinkShort(data_links) #Last slash of a link, so you can see what folder you will follow
 
 
-data_foldernumber = FolderChooser(data_foldernames) # get the one number of the enumerated links to follow; chosen by the user
+data_foldernumber = dd.FolderChooser(data_foldernames) # get the one number of the enumerated links to follow; chosen by the user
 
 print("\nEntering folder: ", data_foldernames[data_foldernumber],"\n" )
 
 
-ThreeDots() #print three Dots with a short delay
+dd.ThreeDots() #print three Dots with a short delay
 
 
 ###   Follow the Link that has been chosen with the number with FolderChooser
@@ -136,16 +137,16 @@ follow(data_links[data_foldernumber])
 
 ###   Choose the Region you want the Data for
 
-region_links = LinkCleaner()
+region_links = dd.LinkCleaner()
 
-region_foldernames = LinkShort(region_links)
+region_foldernames = dd.LinkShort(region_links)
 
-region_foldernumber = FolderChooser(region_foldernames) 
+region_foldernumber = dd.FolderChooser(region_foldernames) 
 
 
 print("\nEntering folder: ", region_foldernames[region_foldernumber], "\n")
 
-ThreeDots()
+dd.ThreeDots()
 
 
 ###   Follow the Link that has been chosen with the number with FolderChooser
@@ -157,6 +158,8 @@ follow(region_links[region_foldernumber])
 
 
 
+
+
 #Logout from Website
 
 go("https://urs.earthdata.nasa.gov/logout")
@@ -164,8 +167,8 @@ print("\n Successfully logged out from the Website\n")
 
 
 
-'''
 
+'''
 
 #####    for download token
 #baseurl = "https://urs.earthdata.nasa.gov/users/"
