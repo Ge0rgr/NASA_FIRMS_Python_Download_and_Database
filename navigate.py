@@ -1,11 +1,12 @@
 from bs4 import BeautifulSoup
 from twill.commands import *
 import re
+import sys
 
 # link_cleaner requires that you entered a link with go([Link]) or follow([Link] with twill in the main file)
 # returns a list of links of the html site (with undesirable Links removed (for my personal purpose))
 
-def LinkCleaner():
+def linkCleaner():
 
     data_content = browser.html  # Capture raw HTML
 
@@ -38,7 +39,7 @@ def LinkCleaner():
 # Takes the last slash value from a link (https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS/noaa-21-viirs-c2/Europe/ -> Europe)
 # requires a list and returns a list
 
-def LinkShort(list_links):
+def linkShort(list_links):
 
     #Save just the Folder names for visual presentation (and to get used to regex)
     data = []
@@ -57,24 +58,32 @@ def LinkShort(list_links):
 # this method itself doesn't follow the link, it has to be done manually in the main file
 # it returns the number representing the folder that the user wants to follow
 
-def FolderChooser(FoldersToChoose):
+def folderChooser(FoldersToChoose):
 
     print("\n\n From which Data-Collection do you want to download the Data?\n")
 
     for i,val in enumerate(FoldersToChoose): #enumerate the list to have to user choose a number connected to the links
         print(i,val)
 
-
-    folder = int(input("\n Please enter the number to the left of the desired folder: "))
+    folder = input("\n Please enter the number to the left of the desired folder (Enter \".\" to quit): ")
 
     #only continue when a valid number is entered
     while True:
-        if folder not in range(0,len(FoldersToChoose)):
-            print("\n Please enter a valid number (0 -",len(FoldersToChoose)-1,") : ")
-            folder = int(input())
-        elif folder in range(0,len(FoldersToChoose)):
-            break
 
-    return folder
+        if folder == ".":
+            sys.exit()
+        try: 
+            folder = int(folder)
+            if folder not in range(0,len(FoldersToChoose)):
+                print("\n Please enter a valid number (0 -",len(FoldersToChoose)-1,") (Enter \".\" to quit) : ", end="")
+                folder = input()
+            elif folder in range(0,len(FoldersToChoose)):
+                return folder
+
+        except ValueError:
+            print("\nThat is not a number!")
+            print("\n Please enter a valid number (0 -",len(FoldersToChoose)-1,") (Enter \".\" to quit) : ", end="")
+            folder = input()
+
 
 ################################################################################################################################

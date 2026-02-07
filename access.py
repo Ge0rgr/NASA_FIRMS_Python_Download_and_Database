@@ -3,7 +3,6 @@ import sys
 from twill.commands import *
 import getpass
 
-
 def login():
 
     #### if by any chance loggged in, then logout first
@@ -20,7 +19,7 @@ def login():
     while True:
 
         if mail == "" :
-            mail = input('Please enter your email (Type "." if you want to quit): ')
+            mail = input('Please enter your email (Enter "." to quit): ')
 
             if mail == ".":
                 sys.exit()
