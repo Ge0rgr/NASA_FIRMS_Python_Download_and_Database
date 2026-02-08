@@ -7,29 +7,20 @@ import access as ac
 
 def main():
  
-    #Login to the Website and retrieve the username
+    #Login to the Website, retrieve the username and downloadtoken
     ac.login()
     username = ac.get_username()
 
-    #print("\nWelcome ",end="")
-    #for char in username:
-    #    print(char,end="",flush=True)
-    #    time.sleep(0.3)
-    #print("\n")
+    print("\nWelcome ",end="")
+    ut.coolPrint(username,0.3)
+    print("\n")
 
-    
-    ####     Choose the Data-Collection that you want to get the Data from
-    #go("https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS")
-    
     dtoken = ac.get_downloadtoken(username)
 
-    print(dtoken)
-
-    '''
-    go("https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS/landsat/Alaska/LANDSAT_Alaska__2022311.txt")
-
-    show()
-    show_forms()
+    ####     Choose the Data-Collection that you want to get the Data from
+    go("https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS")
+    
+    
 
     
     data_links = nav.linkCleaner() #Method to retrieve only desirable links in a list
@@ -78,9 +69,9 @@ def main():
     print(file_links)
     
     ### Logout from the website
-    #ac.logout()
+    ac.logout()
 
-    '''
+    
  #prevents the script from running after the import
 if __name__ == "__main__":
     main()   

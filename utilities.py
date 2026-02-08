@@ -12,10 +12,10 @@ def threedots():
 
 
 #print out names slowly for fancyness
-def coolPrint(text):
+def coolPrint(text, sleep = 0.1):
     for char in text:
         print(char, end ="",flush = True)
-        time.sleep(0.1)
+        time.sleep(sleep)
 
 
 ##################################################################################################################################
