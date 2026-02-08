@@ -11,11 +11,13 @@ def main():
     ac.login()
     username = ac.get_username()
 
-    print("\nWelcome ",end="")
-    ut.coolPrint(username,0.3)
-    print("\n")
+    #print("\nWelcome ",end="")
+    #ut.coolPrint(username,0.3)
+    #print("\n")
 
     dtoken = ac.get_downloadtoken(username)
+    #print("\nretrieved download token\n")
+    
 
     ####     Choose the Data-Collection that you want to get the Data from
     go("https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS")
@@ -26,8 +28,10 @@ def main():
     data_links = nav.linkCleaner() #Method to retrieve only desirable links in a list
     
     data_foldernames = nav.linkShort(data_links) #Last slash of a link, so you can see what folder you will follow
-
+    
     data_foldernumber = nav.folderChooser(data_foldernames) # get the one number of the enumerated links to follow; chosen by the user
+
+    chosendata = data_foldernames[data_foldernumber]
 
     print("\nEntering folder: ", end ="")
 
@@ -50,6 +54,7 @@ def main():
 
     region_foldernumber = nav.folderChooser(region_foldernames) 
 
+    chosenregion = region_foldernames[region_foldernumber]
 
     print("\nEntering folder: ", end ="")
     
@@ -67,11 +72,13 @@ def main():
 
     file_links = nav.linkCleaner()
     print(file_links)
+
+    ut.downloader(file_links,dtoken,chosendata, chosenregion )
     
     ### Logout from the website
-    ac.logout()
+    #ac.logout()
 
-    
+
  #prevents the script from running after the import
 if __name__ == "__main__":
     main()   

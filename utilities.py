@@ -1,4 +1,6 @@
 import time
+import urllib.request
+import os #creates f.e. folders
 
 #Just print out thre dots with a delay for a cool show
 def threedots():
@@ -19,3 +21,26 @@ def coolPrint(text, sleep = 0.1):
 
 
 ##################################################################################################################################
+
+
+def downloader(file_links, token, chosendata, chosenregion):
+    
+    foldername = str(f"{chosendata}/{chosenregion}")
+
+    os.makedirs(foldername, exist_ok= True)
+
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+
+    filelink = file_links[0]
+
+    filename = filelink.split("/")[-1]
+
+    filepath = os.path.join(foldername, filename)
+
+    req = urllib.request.Request(filelink, headers = headers)
+
+    open(filepath, "wb").write(urllib.request.urlopen(req).read())
+    
+    return

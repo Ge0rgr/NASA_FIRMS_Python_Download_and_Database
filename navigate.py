@@ -24,7 +24,7 @@ def linkCleaner():
     tmp_data_links = []
 
     for link in data_links:
-        if substring in link:
+        if substring in link and "README" not in link:
             tmp_data_links.append(link)
             
     data_links = tmp_data_links
