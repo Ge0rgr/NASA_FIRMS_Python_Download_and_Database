@@ -15,10 +15,11 @@ def linkCleaner():
 
     #Retrieve specific links that are saved in html and add them to a list
     for link in soup.find_all("tr"):
-        if link.has_attr("data-href"):
-            data_links.append(link["data-href"])
-
-
+        if link.has_attr("data-path"):
+            data_links.append(link["data-path"])
+    
+    return data_links
+    '''
     # remove unwanted links from the list
     substring = "https" 
 
@@ -31,7 +32,7 @@ def linkCleaner():
     data_links = tmp_data_links
 
     return data_links
-
+    '''
 
 #####################################################################################################################################
 

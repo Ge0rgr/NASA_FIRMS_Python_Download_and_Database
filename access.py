@@ -2,6 +2,8 @@ import re
 import sys
 from twill.commands import *
 import getpass
+import urllib.request
+from bs4 import BeautifulSoup as bs
 
 def login():
 
@@ -37,7 +39,6 @@ def login():
         fv("1", "username", mail)
         fv("1", "password", passw)
 
-
         submit() #presses the commit button to log in
 
 
@@ -67,9 +68,10 @@ def login():
             continue
 
 
+#####################################################################################
+
 
 def get_username():
-    ####          Go to nasa user-profile to retrieve the username
 
     go('https://urs.earthdata.nasa.gov/profile')
 
@@ -93,6 +95,54 @@ def get_username():
     username = html_words[tmp + 1].strip()
 
     return username
+
+
+##############################################################################################
+
+    #####    Retrieve download token (Bearer Token) from the user profile
+def get_downloadtoken(username):
+
+    token =""
+    buttonspressed = 0
+
+    while token == "":
+
+        go(f"https://urs.earthdata.nasa.gov/users/{username}/user_tokens") ##get Token here
+
+        html_content = browser.html
+
+        soup = bs(html_content,"html.parser")
+
+        dotoks = []
+
+        #Retrieve Existing Tokens from html
+        for tok in soup.find_all("input"):
+            if tok.get("id") == ("clippy"):
+                    dotoks.append(tok["value"])
+
+        if len(dotoks) == 0: #if no tokens exist, generate one
+            buttonspressed = buttonspressed +1
+            submit() #generate token
+
+        elif len(dotoks) == 1: #if one token exists, but you didn't generate it for this purpose, then generate a new one
+            match buttonspressed:
+                case 0:
+                    #generate Token
+                    submit(None,"2")
+                    buttonspressed = buttonspressed +1
+                case 1: #if on token exists, because you generated one with the script, then take that one
+                    token = dotoks[0]
+                    return token
+            
+        elif len(dotoks) == 2: #if 2 tokens exist, then take newest one
+            token = dotoks[1]
+            return token
+
+
+##########################################################################################################
+
+
+
 
 def logout():
      go("https://urs.earthdata.nasa.gov/logout")

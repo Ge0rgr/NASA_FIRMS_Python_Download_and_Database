@@ -6,10 +6,10 @@ import access as ac
 
 
 def main():
-
+ 
     #Login to the Website and retrieve the username
-    #ac.login()
-    #username = ac.get_username()
+    ac.login()
+    username = ac.get_username()
 
     #print("\nWelcome ",end="")
     #for char in username:
@@ -19,11 +19,21 @@ def main():
 
     
     ####     Choose the Data-Collection that you want to get the Data from
-    go("https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS")
+    #go("https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS")
+    
+    dtoken = ac.get_downloadtoken(username)
 
+    print(dtoken)
 
+    '''
+    go("https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS/landsat/Alaska/LANDSAT_Alaska__2022311.txt")
+
+    show()
+    show_forms()
+
+    
     data_links = nav.linkCleaner() #Method to retrieve only desirable links in a list
-
+    
     data_foldernames = nav.linkShort(data_links) #Last slash of a link, so you can see what folder you will follow
 
     data_foldernumber = nav.folderChooser(data_foldernames) # get the one number of the enumerated links to follow; chosen by the user
@@ -62,35 +72,19 @@ def main():
 
 
     ###  Download the Data
+    
 
+    file_links = nav.linkCleaner()
+    print(file_links)
     
     ### Logout from the website
     #ac.logout()
 
-
+    '''
  #prevents the script from running after the import
 if __name__ == "__main__":
     main()   
 
-
-
-    #####    for download token
-    #baseurl = "https://urs.earthdata.nasa.gov/users/"
-
-    #html = urllib.request.urlopen("https://urs.earthdata.nasa.gov/users/")
-
-    #soup = bs(html)
-    #print(soup)
-
-    #url = baseurl + str(start) + '/' + str(start + 1)
-
-    #text = "None"
-
-
-    #document = urllib.request.urlopen(url, None, 30, context=ctx)
-    #text = document.read().decode()
-    #if document.getcode() != 200 :
-    #    print("Error code=",document.getcode(), url)
-
+    
 
 
