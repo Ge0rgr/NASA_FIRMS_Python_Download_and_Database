@@ -72,15 +72,11 @@ def main():
 
     file_links = nav.linkCleaner()
 
-    print("\nStarting download", end="")
-    ut.threedots()
-    print("\n")
-
-    ut.downloader(file_links,dtoken,chosendata, chosenregion )
+    ut.downloader(file_links,dtoken,chosendata, chosenregion)
     
     print("\nDownload complete!\n")
 
-    
+
     ### Logout from the website
     #ac.logout()
 
