@@ -17,8 +17,6 @@ def linkCleaner():
     for link in soup.find_all("tr"):
         if link.has_attr("data-path"):
             data_links.append(link["data-path"])
-    
-    return data_links
 
     # remove unwanted links from the list
     substring = "https" 
