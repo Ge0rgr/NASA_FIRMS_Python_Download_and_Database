@@ -33,14 +33,17 @@ def downloader(file_links, token, chosendata, chosenregion):
         "Authorization": f"Bearer {token}"
     }
 
-    filelink = file_links[0]
+    print()
+    for i,dat in enumerate(file_links, start = 1):
 
-    filename = filelink.split("/")[-1]
+        filename = dat.split("/")[-1]
 
-    filepath = os.path.join(foldername, filename)
+        filepath = os.path.join(foldername, filename)
 
-    req = urllib.request.Request(filelink, headers = headers)
+        req = urllib.request.Request(dat, headers = headers)
 
-    open(filepath, "wb").write(urllib.request.urlopen(req).read())
-    
+        print("Downloading file ", i, "of ", len(file_links))
+
+        open(filepath, "wb").write(urllib.request.urlopen(req).read())
+
     return
