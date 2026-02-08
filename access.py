@@ -134,7 +134,7 @@ def get_downloadtoken(username):
                     token = dotoks[0]
                     return token
             
-        elif len(dotoks) == 2: #if 2 tokens exist, then take newest one
+        elif len(dotoks) == 2: #if 2 (maximum possible) tokens exist, then take newest one
             token = dotoks[1]
             return token
 

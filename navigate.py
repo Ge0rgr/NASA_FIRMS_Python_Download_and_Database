@@ -19,7 +19,7 @@ def linkCleaner():
             data_links.append(link["data-path"])
     
     return data_links
-    '''
+
     # remove unwanted links from the list
     substring = "https" 
 
@@ -28,11 +28,11 @@ def linkCleaner():
     for link in data_links:
         if substring in link:
             tmp_data_links.append(link)
-
+            
     data_links = tmp_data_links
 
     return data_links
-    '''
+    
 
 #####################################################################################################################################
 
