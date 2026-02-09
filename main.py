@@ -9,6 +9,8 @@ def main():
  
     #Login to the Website, retrieve the username and downloadtoken
     ac.login()
+
+    
     username = ac.get_username()
 
     #print("\nWelcome ",end="")
@@ -17,12 +19,12 @@ def main():
 
     dtoken = ac.get_downloadtoken(username)
     #print("\nretrieved download token\n")
-    
 
+
+    
+    
     ####     Choose the Data-Collection that you want to get the Data from
     go("https://nrt3.modaps.eosdis.nasa.gov/archive/FIRMS")
-    
-    
 
     
     data_links = nav.linkCleaner() #Method to retrieve only desirable links in a list
@@ -79,7 +81,7 @@ def main():
 
     ### Logout from the website
     #ac.logout()
-
+    
 
  #prevents the script from running after the import
 if __name__ == "__main__":
