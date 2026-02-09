@@ -13,14 +13,15 @@ def main():
     
     username = ac.get_username()
 
-    #print("\nWelcome ",end="")
-    #ut.coolPrint(username,0.3)
-    #print("\n")
+    print("\nWelcome ",end="")
+    ut.coolPrint(username,0.3)
+    print("\n")
 
     dtoken = ac.get_downloadtoken(username)
-    #print("\nretrieved download token\n")
 
-
+    print("\nretrieving your download token",end="")
+    ut.threedots()
+    print("\n")
     
     
     ####     Choose the Data-Collection that you want to get the Data from
@@ -80,7 +81,7 @@ def main():
 
 
     ### Logout from the website
-    #ac.logout()
+    ac.logout()
     
 
  #prevents the script from running after the import
