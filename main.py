@@ -4,7 +4,6 @@ import utilities as ut
 import navigate as nav
 import access as ac
 
-
 def main():
  
     #Login to the Website, retrieve the username and downloadtoken
@@ -75,8 +74,10 @@ def main():
 
     file_links = nav.linkCleaner()
 
+
     ut.downloader(file_links,dtoken,chosendata, chosenregion)
-    
+
+
     print("\nDownload complete!\n")
 
 

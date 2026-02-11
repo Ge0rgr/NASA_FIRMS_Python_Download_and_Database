@@ -4,6 +4,8 @@ import urllib.request
 import os #creates f.e. folders
 from pathlib import Path
 import databasehandling as dbh
+import csv
+
 
 #Just print out thre dots with a delay for a cool show
 def threedots():
@@ -27,7 +29,20 @@ def coolPrint(text, sleep = 0.1):
 
 
 def downloader(file_links, token, chosendata, chosenregion):
-    
+
+    while True:
+        dec = input("\nDo you want to make an additional .csv? (y/n): ")
+
+        if dec != "y" or dec != "n":
+            print("\nPlease enter \"y\" for yes or \"n\" for no.")
+
+            print(dec)
+            continue
+
+        else:
+            break
+
+
     while True:
         try:
             dbh.dbcreation()
@@ -81,6 +96,10 @@ def downloader(file_links, token, chosendata, chosenregion):
 
                 filepath = os.path.join(foldername, filename) #create the correct path for the intended save location
 
+                csvpath = os.path.join(foldername,f"{chosendata}_{chosenregion}")
+
+                txttocsv(filepath,csvpath)
+
                 req = urllib.request.Request(dat, headers = headers)
 
                 print("Downloading file ", i, "of ", len(file_links))
@@ -98,3 +117,24 @@ def downloader(file_links, token, chosendata, chosenregion):
 
 
 #################################################################
+
+
+### make a csv with the txt Data
+
+def txttocsv(filepath,csvpath):
+
+    file_exists = os.path.isfile(csvpath) #check if .csv file already exists
+
+    with open(filepath, "r", encoding="utf-8") as txt_file, \
+        open(csvpath, "a", newline="", encoding="utf-8-sig") as csv_file:
+
+        writer = csv.writer(csv_file, delimiter=";")
+
+        for line in txt_file:
+            line = line.strip()
+
+            if not line:
+                continue
+
+            columns = line.split(",")
+            writer.writerow(columns)
