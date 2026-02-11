@@ -69,11 +69,8 @@ def main():
     follow(region_links[region_foldernumber])
 
 
-    ###  Download the Data
-    
-
+    ###  Download the Data nad possibly create a .csv with the downloaded data
     file_links = nav.linkCleaner()
-
 
     ut.downloader(file_links,dtoken,chosendata, chosenregion)
 

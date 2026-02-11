@@ -33,14 +33,13 @@ def downloader(file_links, token, chosendata, chosenregion):
     while True:
         dec = input("\nDo you want to make an additional .csv? (y/n): ")
 
-        if dec != "y" or dec != "n":
-            print("\nPlease enter \"y\" for yes or \"n\" for no.")
-
-            print(dec)
-            continue
+        if dec == "y" or dec == "n":
+            break
 
         else:
-            break
+            print("\nPlease enter \"y\" for yes or \"n\" for no.")
+            continue
+
 
 
     while True:
@@ -96,15 +95,23 @@ def downloader(file_links, token, chosendata, chosenregion):
 
                 filepath = os.path.join(foldername, filename) #create the correct path for the intended save location
 
-                csvpath = os.path.join(foldername,f"{chosendata}_{chosenregion}")
-
-                txttocsv(filepath,csvpath)
 
                 req = urllib.request.Request(dat, headers = headers)
 
                 print("Downloading file ", i, "of ", len(file_links))
 
                 open(filepath, "wb").write(urllib.request.urlopen(req).read())
+
+
+                match dec:
+
+                    case "n":
+                        pass
+
+                    case "y":
+
+                        csvname =(f"{chosendata}_{chosenregion}.csv")
+                        txttocsv(filepath,csvname)
             
                 dbh.dbdatainsert(filename,chosendata,chosenregion,currdate)
                 
@@ -121,20 +128,34 @@ def downloader(file_links, token, chosendata, chosenregion):
 
 ### make a csv with the txt Data
 
-def txttocsv(filepath,csvpath):
+def txttocsv(filepath,csvname):
 
-    file_exists = os.path.isfile(csvpath) #check if .csv file already exists
+    filepath = Path(filepath)
+    csvpath = filepath.parent / csvname
+
+    csvexist = csvpath.exists()
 
     with open(filepath, "r", encoding="utf-8") as txt_file, \
-        open(csvpath, "a", newline="", encoding="utf-8-sig") as csv_file:
+        open(csvpath, "a", newline="", encoding="utf-8-sig") as csv_file: #-sig is important for umlaute
 
-        writer = csv.writer(csv_file, delimiter=";")
+        writer = csv.writer(csv_file, delimiter=";") #this delimiter is used for the german excel
 
-        for line in txt_file:
+        for i,line in enumerate(txt_file):
+
             line = line.strip()
 
             if not line:
                 continue
 
-            columns = line.split(",")
-            writer.writerow(columns)
+            if csvexist == True and i==0: #If its the first line and the csv already exist, then skip the first line
+                continue
+
+            columns = line.split(",") #split txt at existing ,
+
+            newcol = []
+
+            for value in columns:
+                value = [value.replace(".",",")] #replace . with , for my use in germany
+                newcol.append(value[0]) #since ist a list, you have to index the value
+
+            writer.writerow(newcol)
