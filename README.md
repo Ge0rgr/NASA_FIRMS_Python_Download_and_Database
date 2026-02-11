@@ -1,4 +1,5 @@
 This script was specifically developed for the daily NASA FIRMS data.
+You need an existing NASA account.
 
 The Python script downloads the daily NASA FIRMS fire data, which are provided as .txt files. The user logs into NASA through the script and selects the folder containing the data to be downloaded. In addition, a database is created to prevent duplicate downloads. During the download of the .txt files, a single .csv file is also generated, into which all data from the text files are appended.
 
