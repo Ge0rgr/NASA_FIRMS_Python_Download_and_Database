@@ -4,6 +4,7 @@ from twill.commands import *
 import getpass
 import urllib.request
 from bs4 import BeautifulSoup as bs
+from utilities import coolPrint
 
 def login():
 
@@ -145,5 +146,10 @@ def get_downloadtoken(username):
 
 
 def logout():
-     go("https://urs.earthdata.nasa.gov/logout")
-     print("\n Successfully logged out from the Website\n")
+    go("https://urs.earthdata.nasa.gov/logout")
+    print("\n Successfully logged out from the Website\n")
+
+    text = "\nThank you!"
+    coolPrint(text,0.2)
+    print("\n")
+    
